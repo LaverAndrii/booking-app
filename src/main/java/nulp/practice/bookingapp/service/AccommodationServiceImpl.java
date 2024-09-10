@@ -2,8 +2,8 @@ package nulp.practice.bookingapp.service;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import nulp.practice.bookingapp.dto.AccommodationDto;
-import nulp.practice.bookingapp.dto.AddAccommodationDto;
+import nulp.practice.bookingapp.dto.accommodation.AccommodationDto;
+import nulp.practice.bookingapp.dto.accommodation.AddAccommodationDto;
 import nulp.practice.bookingapp.mapper.AccommodationMapper;
 import nulp.practice.bookingapp.model.Accommodation;
 import nulp.practice.bookingapp.repository.AccommodationRepository;

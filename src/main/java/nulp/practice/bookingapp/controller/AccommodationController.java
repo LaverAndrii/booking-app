@@ -2,8 +2,8 @@ package nulp.practice.bookingapp.controller;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import nulp.practice.bookingapp.dto.AccommodationDto;
-import nulp.practice.bookingapp.dto.AddAccommodationDto;
+import nulp.practice.bookingapp.dto.accommodation.AccommodationDto;
+import nulp.practice.bookingapp.dto.accommodation.AddAccommodationDto;
 import nulp.practice.bookingapp.service.AccommodationService;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;

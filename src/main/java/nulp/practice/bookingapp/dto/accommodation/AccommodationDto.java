@@ -1,11 +1,12 @@
-package nulp.practice.bookingapp.dto;
+package nulp.practice.bookingapp.dto.accommodation;
 
 import java.math.BigDecimal;
 import lombok.Data;
 import nulp.practice.bookingapp.model.Accommodation;
 
 @Data
-public class AddAccommodationDto {
+public class AccommodationDto {
+    private Long id;
     private Accommodation.AccommodationType type;
     private String location; // type Address ?
     private String size;
