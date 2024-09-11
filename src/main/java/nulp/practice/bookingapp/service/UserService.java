@@ -1,11 +1,15 @@
 package nulp.practice.bookingapp.service;
 
-import nulp.practice.bookingapp.model.User;
+import nulp.practice.bookingapp.dto.user.ProfileUpdateRequestDto;
+import nulp.practice.bookingapp.dto.user.UserRegistrationRequestDto;
+import nulp.practice.bookingapp.dto.user.UserResponseDto;
 
 public interface UserService {
-    User getProfile(String email);
+    UserResponseDto getProfile(String email);
 
     void updateRole();
 
-    void updateProfile(String userEmail, User user);
+    UserResponseDto updateProfile(String userEmail, ProfileUpdateRequestDto requestDto);
+
+    UserResponseDto register(UserRegistrationRequestDto requestDto);
 }

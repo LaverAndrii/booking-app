@@ -1,6 +1,8 @@
 package nulp.practice.bookingapp.controller;
 
 import lombok.RequiredArgsConstructor;
+import nulp.practice.bookingapp.dto.user.ProfileUpdateRequestDto;
+import nulp.practice.bookingapp.dto.user.UserResponseDto;
 import nulp.practice.bookingapp.model.User;
 import nulp.practice.bookingapp.service.UserService;
 import org.springframework.security.core.Authentication;
@@ -8,10 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("/users") //Managing authentication and user registration
+@RestController //Managing authentication and user registration
 @RequiredArgsConstructor
+@RequestMapping("/users")
 public class UserController {
     private final UserService userService;
 
@@ -21,13 +25,14 @@ public class UserController {
     }
 
     @GetMapping("/me") //Retrieves the profile information for the currently logged-in user.
-    public User getMe(Authentication authentication) {
+    public UserResponseDto getMe(Authentication authentication) {
         return userService.getProfile(getUserEmail(authentication));
     }
 
     @PutMapping ("/me")//Allows users to update their profile information.
-    public void updateProfile(Authentication authentication, @RequestBody User user) {
-        userService.updateProfile(getUserEmail(authentication), user);
+    public UserResponseDto updateProfile(Authentication authentication,
+                              @RequestBody ProfileUpdateRequestDto requestDto) {
+        return userService.updateProfile(getUserEmail(authentication), requestDto);
     }
 
     private String getUserEmail(Authentication authentication) {
