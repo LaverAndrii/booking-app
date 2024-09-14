@@ -22,16 +22,12 @@ public class AccommodationController {
 
     @PostMapping
     public AccommodationDto add(@RequestBody AddAccommodationDto addAccommDto) {
-        System.out.println(addAccommDto.toString());
         return accommodationService.add(addAccommDto);
     } // Permits the addition of new accommodations.
 
     @GetMapping //Provides a list of available accommodations.
     public List<AccommodationDto> getAll() {
-        System.out.println("Controller 1");
-        List<AccommodationDto> all = accommodationService.getAll();
-        System.out.println("Controller 2");
-        return all;
+        return accommodationService.getAll();
     }
 
     @GetMapping("/{id}") // Retrieves detailed information about a specific accommodation.
