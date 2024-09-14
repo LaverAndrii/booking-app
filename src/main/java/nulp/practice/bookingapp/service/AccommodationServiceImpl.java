@@ -6,7 +6,7 @@ import nulp.practice.bookingapp.dto.accommodation.AccommodationDto;
 import nulp.practice.bookingapp.dto.accommodation.AddAccommodationDto;
 import nulp.practice.bookingapp.mapper.AccommodationMapper;
 import nulp.practice.bookingapp.model.Accommodation;
-import nulp.practice.bookingapp.repository.AccommodationRepository;
+import nulp.practice.bookingapp.repository.accommodation.AccommodationRepository;
 import org.springframework.stereotype.Service;
 
 @Service

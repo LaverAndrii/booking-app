@@ -6,7 +6,7 @@ import nulp.practice.bookingapp.dto.user.UserRegistrationRequestDto;
 import nulp.practice.bookingapp.dto.user.UserResponseDto;
 import nulp.practice.bookingapp.mapper.UserMapper;
 import nulp.practice.bookingapp.model.User;
-import nulp.practice.bookingapp.repository.UserRepository;
+import nulp.practice.bookingapp.repository.user.UserRepository;
 import org.springframework.stereotype.Service;
 
 @Service

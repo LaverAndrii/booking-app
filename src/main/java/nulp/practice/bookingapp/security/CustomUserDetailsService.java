@@ -1,7 +1,7 @@
 package nulp.practice.bookingapp.security;
 
 import lombok.RequiredArgsConstructor;
-import nulp.practice.bookingapp.repository.UserRepository;
+import nulp.practice.bookingapp.repository.user.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
