@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/accommodations")
-public class AccommodationController {
+public class AccommodationController { //Managing accommodation inventory (CRUD for Accommodations)
     private final AccommodationService accommodationService;
 
     @PostMapping

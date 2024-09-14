@@ -1,4 +1,4 @@
-package nulp.practice.bookingapp.repository;
+package nulp.practice.bookingapp.repository.user;
 
 import java.util.Optional;
 import nulp.practice.bookingapp.model.User;
