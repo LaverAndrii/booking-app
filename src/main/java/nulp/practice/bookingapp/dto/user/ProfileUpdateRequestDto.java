@@ -1,4 +1,8 @@
 package nulp.practice.bookingapp.dto.user;
 
-public record ProfileUpdateRequestDto(String firstName, String lastName) {
+import jakarta.validation.constraints.NotBlank;
+
+public record ProfileUpdateRequestDto(
+        @NotBlank(message = "may not be blank") String firstName,
+        @NotBlank(message = "may not be blank") String lastName) {
 }

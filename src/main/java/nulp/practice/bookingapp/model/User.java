@@ -5,8 +5,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.util.Collection;
+import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +17,7 @@ import lombok.ToString;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
@@ -36,13 +40,15 @@ public class User implements UserDetails {
     private String lastName;
     @Column(nullable = false)
     private String password;
+    @ManyToOne
+    @JoinColumn(nullable = false) //name = ????
     private Role role;
     @Column(nullable = false)
     private boolean isDeleted = false;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return List.of(new SimpleGrantedAuthority("ROLE_" + role.getName()));
     }
 
     @Override
@@ -68,10 +74,5 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return !isDeleted;
-    }
-
-    public enum Role {
-        MANAGER,
-        CUSTOMER
     }
 }

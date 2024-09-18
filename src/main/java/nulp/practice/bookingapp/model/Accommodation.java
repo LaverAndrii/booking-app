@@ -2,6 +2,8 @@ package nulp.practice.bookingapp.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -26,17 +28,23 @@ public class Accommodation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private AccommodationType type;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Type type;
+    @Column(nullable = false)
     private String location; // type Address ?
+    @Column(nullable = false)
     private String size;
-    @Column(columnDefinition = "text[]")
+    @Column(columnDefinition = "text[]") // nullable? !!!!
     private String[] amenities;
+    @Column(nullable = false)
     private BigDecimal dailyRate;
+    @Column(nullable = false)
     private Integer availability;
     @Column(nullable = false)
     private boolean isDeleted = false;
 
-    public enum AccommodationType {
+    public enum Type {
         HOUSE,
         APARTMENT,
         CONDO,
