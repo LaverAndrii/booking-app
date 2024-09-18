@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import nulp.practice.bookingapp.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -30,7 +31,11 @@ public class SecurityConfig {
         return http
                 .cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**", "/error")
+                .authorizeHttpRequests(auth ->
+                        auth.requestMatchers(HttpMethod.GET, "/accommodations")
+                        .permitAll()
+                        .requestMatchers(HttpMethod.GET, "/accommodations/{id}").permitAll()
+                        .requestMatchers("/auth/**", "/error")
                         .permitAll()
                         .anyRequest()
                         .authenticated()

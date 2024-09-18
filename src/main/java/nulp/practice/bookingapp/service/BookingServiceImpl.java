@@ -12,6 +12,7 @@ import nulp.practice.bookingapp.repository.booking.BookingRepository;
 import nulp.practice.bookingapp.repository.booking.BookingSpecificationBuilder;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,8 +23,9 @@ public class BookingServiceImpl implements BookingService {
     private final BookingSpecificationBuilder bookingSpecificationBuilder;
 
     @Override
+    @Transactional
     public BookingDto create(String email, BookAccommodationDto bookAccommodationDto) {
-        Long userId = userService.getProfile(email).getId();
+        Long userId = getUserIdByEmail(email);
         Booking booking = bookingMapper.toModel(bookAccommodationDto);
         booking.setUserId(userId);
         booking.setStatus(Booking.Status.PENDING);
@@ -32,21 +34,32 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public List<BookingDto> getBookingsByEmail(String email) {
-        Long id = userService.getProfile(email).getId();
+        Long id = getUserIdByEmail(email);
         return bookingRepository.findAllByUserId(id).stream()
                 .map(bookingMapper::toDto)
                 .toList();
     }
 
     @Override
-    public BookingDto getBookingById(Long id) {
-        return bookingMapper.toDto(findById(id));
+    public BookingDto getBookingById(Long id, String email) {
+        Booking booking = findById(id);
+        if (!hasUserMadeBooking(booking, email)) {
+            throw new RuntimeException("You can't get this booking");
+        }
+        return bookingMapper.toDto(booking);
     }
 
     @Override
-    public BookingDto cancel(Long id) {
+    @Transactional
+    public BookingDto cancel(Long id, String email) {
         Booking booking = findById(id);
-        booking.setStatus(Booking.Status.CANCELED);
+        if (!hasUserMadeBooking(booking, email)) {
+            throw new RuntimeException("You can't cancel this booking.");
+        }
+        if (booking.getStatus().equals(Booking.Status.CANCELLED)) {
+            throw new RuntimeException("This booking has already been cancelled");
+        }
+        booking.setStatus(Booking.Status.CANCELLED);
         return bookingMapper.toDto(bookingRepository.save(booking));
     }
 
@@ -60,8 +73,12 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public BookingDto update(Long id, UpdateBookingDto updateBookingDto) {
+    @Transactional
+    public BookingDto update(Long id, UpdateBookingDto updateBookingDto, String email) {
         Booking booking = findById(id);
+        if (!hasUserMadeBooking(booking, email)) {
+            throw new RuntimeException("You can't update this booking.");
+        }
         booking.setCheckInDate(updateBookingDto.checkInDate());
         booking.setCheckOutDate(updateBookingDto.checkOutDate());
         return bookingMapper.toDto(bookingRepository.save(booking));
@@ -70,5 +87,14 @@ public class BookingServiceImpl implements BookingService {
     private Booking findById(Long id) {
         return bookingRepository.findById(id).orElseThrow(
                 () -> new RuntimeException("Can`t find booking by id: " + id));
+    }
+
+    private Long getUserIdByEmail(String email) {
+        return userService.getProfile(email).getId();
+    }
+
+    private boolean hasUserMadeBooking(Booking booking, String email) {
+        Long userId = getUserIdByEmail(email);
+        return booking.getUserId().equals(userId);
     }
 }

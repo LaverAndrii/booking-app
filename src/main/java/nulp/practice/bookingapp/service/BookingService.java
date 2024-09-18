@@ -11,11 +11,11 @@ public interface BookingService {
 
     List<BookingDto> getBookingsByEmail(String email);
 
-    BookingDto getBookingById(Long id);
+    BookingDto getBookingById(Long id, String email);
 
-    BookingDto cancel(Long id);
+    BookingDto cancel(Long id, String email);
 
     List<BookingDto> getBookingsByParams(BookingSearchParametersDto searchParamsDto);
 
-    BookingDto update(Long id, UpdateBookingDto updateBookingDto);
+    BookingDto update(Long id, UpdateBookingDto updateBookingDto, String email);
 }

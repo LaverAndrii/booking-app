@@ -7,7 +7,7 @@ import nulp.practice.bookingapp.model.Accommodation;
 @Data
 public class AccommodationDto {
     private Long id;
-    private Accommodation.AccommodationType type;
+    private Accommodation.Type type;
     private String location; // type Address ?
     private String size;
     private String[] amenities;
